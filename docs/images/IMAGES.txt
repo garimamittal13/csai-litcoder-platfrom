@@ -3,7 +3,7 @@
 Drop your exported figures here using these exact filenames.
 The dashboard auto-loads them. Accepts .png or .jpg.
 
-## SAE Variants (Figs 1–9)
+## SAE Variants (Figs 1–11)
 fig-01.png  — SAE Feature Atlas: cortical parcel weight maps per variant
 fig-02.png  — SAE architecture-sensitivity maps
 fig-03.png  — Heatmaps: alignment R, sparsity (L0), MSE across layers
@@ -13,15 +13,17 @@ fig-06.png  — Violin plot of per-subject alignment R across SAE variants
 fig-07.png  — EN–CN alignment drop (mean R difference)
 fig-08.png  — Subject-band analysis: Q4 (R > 0.075) vs Q1 (R < 0.035)
 fig-09.png  — Individual subject alignment rankings & heatmap
+fig-10.png  — Individual subject alignment rankings & heatmap
+fig-11.png  — Individual subject alignment rankings & heatmap
 
-## Normalization Layers (Figs 10–14)
+## Normalization Layers (Figs 12–23)
 fig-10.png  — Normalization architecture-sensitivity maps
 fig-11.png  — Normalization Feature Atlases: cortical parcel maps per variant
 fig-12.png  — Normalization stability & per-language analysis
 fig-13.png  — Subject-band & ranking analyses
 fig-14.png  — Subject-signature RSA for normalization variants
 
-## Attention Mechanisms (Figs 15–26)
+## Attention Mechanisms (Figs 24-30)
 fig-15.png  — Feature Atlas: Glass Brain View (ridge regression voxel importance)
 fig-16.png  — Feature Atlas: Top-Neuron Weight Map per variant
 fig-17.png  — Architecture-Sensitivity Map by layer
@@ -35,7 +37,7 @@ fig-24.png  — Cross-language shared alignment: 2·min(EN,CN)/(EN+CN) per ROI
 fig-25.png  — Language selectivity map: EN-selective (red) vs CN-selective (blue)
 fig-26.png  — Top-20 ROIs by mean |feature–ROI corr| importance score
 
-## Activation Functions (Figs 27–33)
+## Activation Functions (Figs 31–46)
 fig-27.png  — Architecture-sensitivity map: 5-panel sensitivity Δ bar chart
 fig-28.png  — Sensitivity heatmaps: mean Pearson r per (variant, layer)
 fig-29.png  — Stability overview: 3 panels (label breakdown, EN/ZH, strategy)
@@ -44,7 +46,7 @@ fig-31.png  — Training strategy comparison: SI+relu vs SI+gelu & others
 fig-32.png  — LoRA rank sensitivity: gelu/relu improve as rank decreases (r=8 best)
 fig-33.png  — Strategy × Activation mean Pearson r heatmap
 
-## Positional Encodings (Figs 34–45)
+## Positional Encodings (Figs 47–61)
 fig-34.png  — Schaefer 100-ROI atlas structure (MNI152, orthographic)
 fig-35.png  — Feature-neural alignment map: mean |feature–ROI corr|
 fig-36.png  — Cross-language shared alignment: 2·min(EN,CN)/(EN+CN) per ROI
