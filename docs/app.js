@@ -2,6 +2,23 @@
    MI Brain Alignment Dashboard — app.js
    ══════════════════════════════════════════════════════════════ */
 
+// ── FIGURE MAP ────────────────────────────────────────────────
+// Maps each data-slot → figure number → images/fig-XX.png
+// To add an image: put the file in docs/images/ with the right name.
+const FIGURE_MAP = {
+  'sae-1':1,'sae-2':2,'sae-3':3,'sae-4':4,'sae-5':5,
+  'sae-6':6,'sae-7':7,'sae-8':8,'sae-9':9,
+  'norm-1':10,'norm-2':11,'norm-3':12,'norm-4':13,'norm-5':14,
+  'attn-1':15,'attn-2':16,'attn-3':17,'attn-4':18,'attn-5':19,
+  'attn-6':20,'attn-7':21,'attn-8':22,'attn-9':23,'attn-10':24,
+  'attn-11':25,'attn-12':26,
+  'act-1':27,'act-2':28,'act-3':29,'act-4':30,'act-5':31,
+  'act-6':32,'act-7':33,
+  'pe-1':34,'pe-2':35,'pe-3':36,'pe-4':37,'pe-5':38,
+  'pe-6':39,'pe-7':40,'pe-8':41,'pe-9':42,'pe-10':43,
+  'pe-11':44,'pe-12':45,
+};
+
 // ── THEME ─────────────────────────────────────────────────────
 const themeBtn = document.getElementById('themeToggle');
 const savedTheme = localStorage.getItem('mi-theme') || 'dark';
@@ -29,96 +46,52 @@ tabs.forEach(tab => {
   tab.addEventListener('click', () => {
     tabs.forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    const targetId = 'tab-' + tab.dataset.tab;
-    const target = document.getElementById(targetId);
+    const target = document.getElementById('tab-' + tab.dataset.tab);
     if (target) target.classList.add('active');
   });
 });
 
-// ── VIZ UPLOAD ────────────────────────────────────────────────
-// Allow clicking a viz-slot to open file picker, or drag-and-drop an image.
-document.querySelectorAll('.viz-slot').forEach(slot => {
-  const input = slot.querySelector('.viz-upload');
+// ── IMAGE LOADER ──────────────────────────────────────────────
+// Images live in docs/images/fig-01.png … fig-45.png (zero-padded).
+// If the file exists it is shown; otherwise the placeholder stays visible
+// showing the exact filename the author needs to drop in.
+document.querySelectorAll('.viz-slot[data-slot]').forEach(slot => {
+  const slotId  = slot.dataset.slot;
+  const figNum  = FIGURE_MAP[slotId];
+  if (!figNum) return;
 
-  // File input change
-  if (input) {
-    input.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) loadImage(slot, file);
-    });
-  }
+  const padded  = String(figNum).padStart(2, '0');
+  const srcPng  = `images/fig-${padded}.png`;
+  const srcJpg  = `images/fig-${padded}.jpg`;
 
-  // Drag & drop
-  slot.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    slot.style.borderColor = 'var(--accent)';
-  });
-  slot.addEventListener('dragleave', () => {
-    slot.style.borderColor = '';
-  });
-  slot.addEventListener('drop', (e) => {
-    e.preventDefault();
-    slot.style.borderColor = '';
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) loadImage(slot, file);
-  });
+  // Update the hint inside the placeholder with the actual filename
+  const hint = slot.querySelector('.viz-hint');
+  if (hint) hint.innerHTML = `Add <code>docs/images/fig-${padded}.png</code>`;
+
+  // Try PNG first, then JPG
+  tryLoad(slot, srcPng, srcJpg);
 });
 
-function loadImage(slot, file) {
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    // Remove placeholder, insert real img
-    const placeholder = slot.querySelector('.viz-placeholder');
-    if (placeholder) placeholder.remove();
+function tryLoad(slot, src, fallbackSrc) {
+  const img = new Image();
+  img.src = src;
+  img.alt = slot.querySelector('.viz-label')?.textContent || '';
+  img.loading = 'lazy';
 
-    let img = slot.querySelector('img');
-    if (!img) {
-      img = document.createElement('img');
-      slot.appendChild(img);
-    }
-    img.src = ev.target.result;
-    img.alt = file.name;
-
-    // Add replace button
-    if (!slot.querySelector('.replace-btn')) {
-      const btn = document.createElement('button');
-      btn.className = 'replace-btn';
-      btn.textContent = '↩ Replace';
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        resetSlot(slot);
-      });
-      slot.appendChild(btn);
-    }
+  img.onload = () => {
+    img.className = 'viz-img';
+    slot.appendChild(img);
+    const ph = slot.querySelector('.viz-placeholder');
+    if (ph) ph.style.display = 'none';
   };
-  reader.readAsDataURL(file);
-}
 
-function resetSlot(slot) {
-  const img = slot.querySelector('img');
-  const btn = slot.querySelector('.replace-btn');
-  if (img) img.remove();
-  if (btn) btn.remove();
-
-  // Restore placeholder
-  const ph = document.createElement('div');
-  ph.className = 'viz-placeholder';
-  ph.innerHTML = `
-    <div class="viz-icon">🖼️</div>
-    <div class="viz-label">Drop image here</div>
-    <div class="viz-hint">or click to upload</div>
-    <input type="file" class="viz-upload" accept="image/*" />
-  `;
-  slot.appendChild(ph);
-
-  // Re-bind
-  const newInput = ph.querySelector('.viz-upload');
-  newInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) loadImage(slot, file);
-  });
+  img.onerror = () => {
+    if (fallbackSrc) {
+      tryLoad(slot, fallbackSrc, null);
+    }
+    // else: placeholder stays visible — nothing to do
+  };
 }
 
 // ── ACTIVE NAV LINK ───────────────────────────────────────────

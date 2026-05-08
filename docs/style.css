@@ -475,21 +475,30 @@ code {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  cursor: pointer;
   padding: 16px;
   text-align: center;
-  position: relative;
 }
-.viz-icon { font-size: 1.8rem; opacity: 0.5; }
+.viz-icon { font-size: 1.8rem; opacity: 0.4; }
 .viz-label { font-size: 0.8rem; font-weight: 600; color: var(--text-dim); }
 .viz-hint { font-size: 0.72rem; color: var(--text-mute); }
-.viz-upload {
+.viz-hint code {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--accent2);
+}
+/* loaded image fills the slot */
+.viz-slot .viz-img {
   position: absolute;
   inset: 0;
-  opacity: 0;
-  cursor: pointer;
   width: 100%;
   height: 100%;
+  object-fit: contain;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--bg);
 }
 
 /* ── COMPARISON TABLE ────────────────────────────────────────── */
@@ -593,23 +602,6 @@ code {
   color: var(--accent) !important;
   background: rgba(124,106,245,0.1);
 }
-
-/* ── REPLACE BTN ─────────────────────────────────────────────── */
-.replace-btn {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  border: none;
-  padding: 4px 10px;
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  cursor: pointer;
-  backdrop-filter: blur(4px);
-  z-index: 2;
-}
-.replace-btn:hover { background: rgba(0,0,0,0.85); }
 
 /* ── SCROLLBAR ───────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
