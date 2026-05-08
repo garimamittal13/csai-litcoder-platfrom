@@ -1,4 +1,78 @@
 # docs/images/ — visualization files
+# Total: 61 figures  (fig-01.png … fig-61.png)
+# Drop files here with exact names below. Accepts .png or .jpg.
+
+## SAE Variants — 11 images (fig-01 … fig-11)
+fig-01.png
+fig-02.png
+fig-03.png
+fig-04.png
+fig-05.png
+fig-06.png
+fig-07.png
+fig-08.png
+fig-09.png
+fig-10.png
+fig-11.png
+
+## Normalization Layers — 12 images (fig-12 … fig-23)
+fig-12.png
+fig-13.png
+fig-14.png
+fig-15.png
+fig-16.png
+fig-17.png
+fig-18.png
+fig-19.png
+fig-20.png
+fig-21.png
+fig-22.png
+fig-23.png
+
+## Attention Mechanisms — 7 images (fig-24 … fig-30)
+fig-24.png
+fig-25.png
+fig-26.png
+fig-27.png
+fig-28.png
+fig-29.png
+fig-30.png
+
+## Activation Functions — 16 images (fig-31 … fig-46)
+fig-31.png
+fig-32.png
+fig-33.png
+fig-34.png
+fig-35.png
+fig-36.png
+fig-37.png
+fig-38.png
+fig-39.png
+fig-40.png
+fig-41.png
+fig-42.png
+fig-43.png
+fig-44.png
+fig-45.png
+fig-46.png
+
+## Positional Encodings — 15 images (fig-47 … fig-61)
+fig-47.png
+fig-48.png
+fig-49.png
+fig-50.png
+fig-51.png
+fig-52.png
+fig-53.png
+fig-54.png
+fig-55.png
+fig-56.png
+fig-57.png
+fig-58.png
+fig-59.png
+fig-60.png
+fig-61.png
+
 
 Drop your exported figures here using these exact filenames.
 The dashboard auto-loads them. Accepts .png or .jpg.
