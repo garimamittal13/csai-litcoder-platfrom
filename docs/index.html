@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MI Brain Alignment · Team-16</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <span class="brain-icon">🧠</span>
+      <span class="brand-text">MI Brain Alignment</span>
+      <span class="tag">CSAI&nbsp;2026</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#mechanisms">Mechanisms</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+  </div>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────────────── -->
+<section class="hero" id="overview">
+  <div class="hero-inner">
+    <div class="hero-badge">Project C4 · Le Petit Prince fMRI</div>
+    <h1 class="hero-title">
+      Mechanistic Interpretability of<br />
+      <span class="gradient-text">Cross-Language Brain Alignment</span>
+    </h1>
+    <p class="hero-sub">
+      Benchmarking five transformer architecture families against human fMRI responses
+      to identify which internal representations align with neural processing across
+      English and Chinese.
+    </p>
+    <div class="hero-meta">
+      <span>84 subjects (49 EN · 35 CN)</span>
+      <span class="sep">·</span>
+      <span>200 cortical regions (Schaefer atlas)</span>
+      <span class="sep">·</span>
+      <span>TR = 2.0 s</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#mechanisms" class="btn btn-primary">Explore Results</a>
+      <a href="https://github.com/Team-16" class="btn btn-ghost" target="_blank" rel="noopener">💻 GitHub</a>
+    </div>
+  </div>
+  <div class="hero-pipeline">
+    <div class="pipeline-steps">
+      <div class="pstep">Story Text</div>
+      <div class="parrow">→</div>
+      <div class="pstep">LLM / Controlled Model</div>
+      <div class="parrow">→</div>
+      <div class="pstep">Extract Hidden States</div>
+      <div class="parrow">→</div>
+      <div class="pstep">Transform</div>
+      <div class="parrow">→</div>
+      <div class="pstep">Ridge Regression</div>
+      <div class="parrow">→</div>
+      <div class="pstep highlight-step">Pearson R</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SUMMARY STATS ───────────────────────────────────────────── -->
+<section class="stats-bar" id="results">
+  <div class="stats-inner">
+    <div class="stat-card">
+      <div class="stat-num">R = 0.079</div>
+      <div class="stat-label">Best SAE (Vanilla, Layer 11)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">R ≈ 0.045</div>
+      <div class="stat-label">All Norm variants plateau</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">R = 0.71</div>
+      <div class="stat-label">Attention — EN peak (MHA)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">+0.006</div>
+      <div class="stat-label">Only SoLU has +ve XL transfer</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">Sinusoidal</div>
+      <div class="stat-label">Best controlled PE</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MECHANISM CARDS ─────────────────────────────────────────── -->
+<section class="mechanisms-section" id="mechanisms">
+  <div class="section-header">
+    <h2>Five MI Mechanisms</h2>
+    <p>Each mechanism was evaluated with multiple variants using ridge regression on parcellated fMRI data.</p>
+  </div>
+
+  <!-- ── TABS ── -->
+  <div class="tabs-row">
+    <button class="tab active" data-tab="sae">① SAE Variants</button>
+    <button class="tab" data-tab="norm">② Normalization</button>
+    <button class="tab" data-tab="attn">③ Attention</button>
+    <button class="tab" data-tab="act">④ Activations</button>
+    <button class="tab" data-tab="pe">⑤ Pos. Encoding</button>
+  </div>
+
+  <!-- ── SAE ── -->
+  <div class="tab-panel active" id="tab-sae">
+    <div class="mech-layout">
+      <div class="mech-info">
+        <div class="mech-header">
+          <span class="mech-number">01</span>
+          <div>
+            <h3>Sparse Autoencoders</h3>
+            <p class="mech-model">Qwen 2.5-0.5B · 24 layers · d=896</p>
+          </div>
+        </div>
+        <p class="mech-desc">
+          Sparse autoencoders decompose dense activations into interpretable, sparse features.
+          We compare five SAE architectures applied to Qwen 2.5-0.5B hidden states and test
+          whether sparsified representations improve fMRI alignment.
+        </p>
+        <div class="variants-list">
+          <h4>Variants</h4>
+          <div class="variant-chips">
+            <span class="chip chip-best">Vanilla ★</span>
+            <span class="chip chip-best">Gated ★</span>
+            <span class="chip">JumpReLU</span>
+            <span class="chip">BatchTopK</span>
+            <span class="chip">Hierarchical</span>
+          </div>
+        </div>
+        <div class="key-findings">
+          <h4>Key Findings</h4>
+          <ul>
+            <li>Vanilla &amp; Gated SAE at <strong>Layer 11</strong> peak at <code>R = 0.079</code></li>
+            <li>Zero-shot EN→CN transfer: <code>R = 0.064</code></li>
+            <li>SAEs outperform normalization variants by ~75%</li>
+            <li>Sparsity improves cross-lingual alignment compared to dense activations</li>
+          </ul>
+        </div>
+        <div class="strategies-used">
+          <span class="strat">SI</span><span class="strat">IT</span><span class="strat">LoRA r=8/16/32</span><span class="strat">QLoRA</span><span class="strat">DoRA</span>
+        </div>
+      </div>
+      <div class="mech-visuals">
+        <div class="viz-slot" data-slot="sae-1">
+          <div class="viz-placeholder">
+            <div class="viz-icon">📈</div>
+            <div class="viz-label">Layer-wise R curve (EN · ZH)</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+        <div class="viz-slot" data-slot="sae-2">
+          <div class="viz-placeholder">
+            <div class="viz-icon">🗺️</div>
+            <div class="viz-label">Brain activation map</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+        <div class="viz-slot" data-slot="sae-3">
+          <div class="viz-placeholder">
+            <div class="viz-icon">📊</div>
+            <div class="viz-label">Variant comparison bar chart</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NORM ── -->
+  <div class="tab-panel" id="tab-norm">
+    <div class="mech-layout">
+      <div class="mech-info">
+        <div class="mech-header">
+          <span class="mech-number">02</span>
+          <div>
+            <h3>Normalization Layers</h3>
+            <p class="mech-model">Qwen 2.5-0.5B · 24 layers · d=896</p>
+          </div>
+        </div>
+        <p class="mech-desc">
+          Different normalization strategies alter the distribution of hidden states.
+          We swap the default normalization in Qwen 2.5-0.5B and evaluate how each affects
+          alignment with brain responses.
+        </p>
+        <div class="variants-list">
+          <h4>Variants</h4>
+          <div class="variant-chips">
+            <span class="chip">LayerNorm</span>
+            <span class="chip">RMSNorm</span>
+            <span class="chip">ScaleNorm</span>
+            <span class="chip">DeepNorm</span>
+            <span class="chip">BatchNorm</span>
+          </div>
+        </div>
+        <div class="key-findings">
+          <h4>Key Findings</h4>
+          <ul>
+            <li>All variants plateau at <code>R ≈ 0.045</code> — no significant differentiation</li>
+            <li>SAE representations outperform all norm variants by ~75%</li>
+            <li>Normalization choice alone does not drive brain alignment</li>
+            <li>Suggests feature sparsity matters more than activation distribution</li>
+          </ul>
+        </div>
+        <div class="strategies-used">
+          <span class="strat">SI</span><span class="strat">IT</span><span class="strat">LoRA r=8/16/32</span><span class="strat">QLoRA</span><span class="strat">DoRA</span>
+        </div>
+      </div>
+      <div class="mech-visuals">
+        <div class="viz-slot" data-slot="norm-1">
+          <div class="viz-placeholder">
+            <div class="viz-icon">📈</div>
+            <div class="viz-label">Norm variant R by layer</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+        <div class="viz-slot" data-slot="norm-2">
+          <div class="viz-placeholder">
+            <div class="viz-icon">📊</div>
+            <div class="viz-label">SAE vs Norm comparison</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+        <div class="viz-slot" data-slot="norm-3">
+          <div class="viz-placeholder">
+            <div class="viz-icon">🗺️</div>
+            <div class="viz-label">Brain map — best norm variant</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ATTN ── -->
+  <div class="tab-panel" id="tab-attn">
+    <div class="mech-layout">
+      <div class="mech-info">
+        <div class="mech-header">
+          <span class="mech-number">03</span>
+          <div>
+            <h3>Attention Mechanisms</h3>
+            <p class="mech-model">MiniTransformer · d=128 · 4 heads · 4 layers</p>
+          </div>
+        </div>
+        <p class="mech-desc">
+          We compare four multi-head attention variants and measure their cross-lingual
+          brain alignment. A controlled MiniTransformer (d=128) isolates the effect of
+          attention design from model scale.
+        </p>
+        <div class="variants-list">
+          <h4>Variants</h4>
+          <div class="variant-chips">
+            <span class="chip chip-best">MHA ★</span>
+            <span class="chip">MQA</span>
+            <span class="chip chip-best">GQA ★</span>
+            <span class="chip">MHLA</span>
+          </div>
+        </div>
+        <div class="key-findings">
+          <h4>Key Findings</h4>
+          <ul>
+            <li>MHA/GQA most stable cross-lingually</li>
+            <li>English peak: <code>R ≈ 0.71</code></li>
+            <li>Chinese (ZH): <code>R ≈ 0.16</code> — significant language gap</li>
+            <li>Full-attention variants preserve more cross-lingual structure</li>
+          </ul>
+        </div>
+        <div class="strategies-used">
+          <span class="strat">SI</span><span class="strat">IT</span><span class="strat">LoRA r=8/16/32</span>
+        </div>
+      </div>
+      <div class="mech-visuals">
+        <div class="viz-slot" data-slot="attn-1">
+          <div class="viz-placeholder">
+            <div class="viz-icon">📊</div>
+            <div class="viz-label">EN vs ZH R per attention type</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+        <div class="viz-slot" data-slot="attn-2">
+          <div class="viz-placeholder">
+            <div class="viz-icon">🗺️</div>
+            <div class="viz-label">Brain activation — MHA vs GQA</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+        <div class="viz-slot" data-slot="attn-3">
+          <div class="viz-placeholder">
+            <div class="viz-icon">📈</div>
+            <div class="viz-label">Cross-lingual transfer curve</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ACT ── -->
+  <div class="tab-panel" id="tab-act">
+    <div class="mech-layout">
+      <div class="mech-info">
+        <div class="mech-header">
+          <span class="mech-number">04</span>
+          <div>
+            <h3>Activation Functions</h3>
+            <p class="mech-model">TinyCausalTransformer · tiny d=64/2L · small d=96/3L</p>
+          </div>
+        </div>
+        <p class="mech-desc">
+          Activation functions govern nonlinear transformations inside FFN blocks.
+          We swap activations in a controlled TinyCausalTransformer and measure the
+          effect on brain alignment and cross-language transfer.
+        </p>
+        <div class="variants-list">
+          <h4>Variants</h4>
+          <div class="variant-chips">
+            <span class="chip">ReLU</span>
+            <span class="chip">GELU</span>
+            <span class="chip">GEGLU</span>
+            <span class="chip">SwiGLU</span>
+            <span class="chip chip-best">SoLU ★</span>
+          </div>
+        </div>
+        <div class="key-findings">
+          <h4>Key Findings</h4>
+          <ul>
+            <li><strong>SoLU</strong> is the <em>only</em> variant with positive cross-language transfer (<code>+0.006</code>)</li>
+            <li>GEGLU and SwiGLU show stronger EN alignment but poor XL transfer</li>
+            <li>SoLU's superposition-reduction inductive bias may aid cross-lingual generalization</li>
+            <li>ReLU/GELU perform on par with each other</li>
+          </ul>
+        </div>
+        <div class="strategies-used">
+          <span class="strat">SI</span><span class="strat">IT</span><span class="strat">LoRA r=8/16/32</span>
+        </div>
+      </div>
+      <div class="mech-visuals">
+        <div class="viz-slot" data-slot="act-1">
+          <div class="viz-placeholder">
+            <div class="viz-icon">📊</div>
+            <div class="viz-label">Activation variant R comparison</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+        <div class="viz-slot" data-slot="act-2">
+          <div class="viz-placeholder">
+            <div class="viz-icon">🔁</div>
+            <div class="viz-label">Cross-language transfer delta</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+        <div class="viz-slot" data-slot="act-3">
+          <div class="viz-placeholder">
+            <div class="viz-icon">🗺️</div>
+            <div class="viz-label">Brain map — SoLU vs ReLU</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PE ── -->
+  <div class="tab-panel" id="tab-pe">
+    <div class="mech-layout">
+      <div class="mech-info">
+        <div class="mech-header">
+          <span class="mech-number">05</span>
+          <div>
+            <h3>Positional Encodings</h3>
+            <p class="mech-model">TinyCausalTransformer · intfloat/multilingual-e5-small (ref)</p>
+          </div>
+        </div>
+        <p class="mech-desc">
+          Positional encodings provide transformers with sequential order information.
+          We compare five PE strategies in a controlled setting and benchmark against
+          a pretrained multilingual reference model.
+        </p>
+        <div class="variants-list">
+          <h4>Variants</h4>
+          <div class="variant-chips">
+            <span class="chip chip-best">Sinusoidal ★</span>
+            <span class="chip">Learned</span>
+            <span class="chip">RoPE</span>
+            <span class="chip">ALiBi</span>
+            <span class="chip">XPOS</span>
+          </div>
+        </div>
+        <div class="key-findings">
+          <h4>Key Findings</h4>
+          <ul>
+            <li>Pretrained backbone (multilingual-e5-small) dominates all controlled variants</li>
+            <li><strong>Sinusoidal</strong> achieves the best alignment among controlled models</li>
+            <li>Learned PE is competitive but less stable across languages</li>
+            <li>RoPE, ALiBi, XPOS underperform without pretraining in this regime</li>
+          </ul>
+        </div>
+        <div class="strategies-used">
+          <span class="strat">SI</span><span class="strat">IT</span><span class="strat">LoRA r=8/16/32</span>
+        </div>
+      </div>
+      <div class="mech-visuals">
+        <div class="viz-slot" data-slot="pe-1">
+          <div class="viz-placeholder">
+            <div class="viz-icon">📊</div>
+            <div class="viz-label">PE variant R comparison</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+        <div class="viz-slot" data-slot="pe-2">
+          <div class="viz-placeholder">
+            <div class="viz-icon">📈</div>
+            <div class="viz-label">Controlled vs pretrained curve</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+        <div class="viz-slot" data-slot="pe-3">
+          <div class="viz-placeholder">
+            <div class="viz-icon">🗺️</div>
+            <div class="viz-label">Brain map — Sinusoidal</div>
+            <div class="viz-hint">Drop your visualization here</div>
+            <input type="file" class="viz-upload" accept="image/*" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPARISON TABLE ────────────────────────────────────────── -->
+<section class="comparison-section">
+  <div class="section-header">
+    <h2>Cross-Mechanism Comparison</h2>
+    <p>Best-performing variant per mechanism and adaptation strategy.</p>
+  </div>
+  <div class="table-wrap">
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Mechanism Family</th>
+          <th>Best Variant</th>
+          <th>EN R</th>
+          <th>ZH R</th>
+          <th>XL Transfer</th>
+          <th>Model</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="row-num">01</span></td>
+          <td><strong>Sparse Autoencoders</strong></td>
+          <td><span class="chip chip-best">Vanilla / Gated</span></td>
+          <td class="metric-cell high">0.079</td>
+          <td class="metric-cell mid">0.064</td>
+          <td class="metric-cell mid">+0.015</td>
+          <td class="mono">Qwen 2.5-0.5B</td>
+        </tr>
+        <tr>
+          <td><span class="row-num">02</span></td>
+          <td><strong>Normalization Layers</strong></td>
+          <td><span class="chip">LayerNorm ≈ All</span></td>
+          <td class="metric-cell low">≈ 0.045</td>
+          <td class="metric-cell low">—</td>
+          <td class="metric-cell low">—</td>
+          <td class="mono">Qwen 2.5-0.5B</td>
+        </tr>
+        <tr>
+          <td><span class="row-num">03</span></td>
+          <td><strong>Attention Variants</strong></td>
+          <td><span class="chip chip-best">MHA / GQA</span></td>
+          <td class="metric-cell high">0.71</td>
+          <td class="metric-cell mid">0.16</td>
+          <td class="metric-cell mid">stable</td>
+          <td class="mono">MiniTransformer</td>
+        </tr>
+        <tr>
+          <td><span class="row-num">04</span></td>
+          <td><strong>Activation Functions</strong></td>
+          <td><span class="chip chip-best">SoLU</span></td>
+          <td class="metric-cell mid">—</td>
+          <td class="metric-cell mid">—</td>
+          <td class="metric-cell high">+0.006</td>
+          <td class="mono">TinyCausalTransformer</td>
+        </tr>
+        <tr>
+          <td><span class="row-num">05</span></td>
+          <td><strong>Positional Encodings</strong></td>
+          <td><span class="chip chip-best">Sinusoidal</span></td>
+          <td class="metric-cell mid">—</td>
+          <td class="metric-cell mid">—</td>
+          <td class="metric-cell mid">best controlled</td>
+          <td class="mono">TinyCausalTransformer</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── ABOUT ────────────────────────────────────────────────────── -->
+<section class="about-section" id="about">
+  <div class="section-header">
+    <h2>About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-card">
+      <h4>Dataset</h4>
+      <p><strong>ds003643</strong> — 84 subjects (49 EN, 35 CN) listening to <em>The Little Prince</em>. fMRI parcellated into 200 cortical regions (Schaefer atlas), TR = 2.0 s.</p>
+    </div>
+    <div class="about-card">
+      <h4>Pipeline</h4>
+      <p>Story text → hidden-state extraction → hemodynamic lag stack (τ=1..5) → ridge regression → Pearson R per brain parcel.</p>
+    </div>
+    <div class="about-card">
+      <h4>Adaptation Strategies</h4>
+      <p><strong>SI</strong> (frozen), <strong>IT</strong> (fine-tuned), <strong>LoRA</strong> r=8/16/32, <strong>QLoRA</strong> (4-bit), <strong>DoRA</strong> (weight-decomposed).</p>
+    </div>
+    <div class="about-card">
+      <h4>Authors</h4>
+      <p>Anupam &nbsp;·&nbsp; Garima &nbsp;·&nbsp; Abdul<br /><em>CSAI 2026 — IIIT Hyderabad</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────── -->
+<footer class="footer">
+  <p>Team-16 · Project C4 · CSAI 2026 · IIIT Hyderabad</p>
+  <p class="footer-inspired">Inspired by <a href="https://litcoder-brain.github.io/" target="_blank" rel="noopener">LITcoder Brain</a></p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
