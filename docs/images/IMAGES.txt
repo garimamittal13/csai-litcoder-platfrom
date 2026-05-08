@@ -4,58 +4,11 @@ Drop your exported figures here using these exact filenames.
 The dashboard auto-loads them. Accepts .png or .jpg.
 
 ## SAE Variants (Figs 1–11)
-fig-01.png  — SAE Feature Atlas: cortical parcel weight maps per variant
-fig-02.png  — SAE architecture-sensitivity maps
-fig-03.png  — Heatmaps: alignment R, sparsity (L0), MSE across layers
-fig-04.png  — Cross-subject stability: per-subject alignment R distributions
-fig-05.png  — 95% CI for mean alignment R by model type & SAE variant
-fig-06.png  — Violin plot of per-subject alignment R across SAE variants
-fig-07.png  — EN–CN alignment drop (mean R difference)
-fig-08.png  — Subject-band analysis: Q4 (R > 0.075) vs Q1 (R < 0.035)
-fig-09.png  — Individual subject alignment rankings & heatmap
-fig-10.png  — Individual subject alignment rankings & heatmap
-fig-11.png  — Individual subject alignment rankings & heatmap
 
 ## Normalization Layers (Figs 12–23)
-fig-10.png  — Normalization architecture-sensitivity maps
-fig-11.png  — Normalization Feature Atlases: cortical parcel maps per variant
-fig-12.png  — Normalization stability & per-language analysis
-fig-13.png  — Subject-band & ranking analyses
-fig-14.png  — Subject-signature RSA for normalization variants
 
 ## Attention Mechanisms (Figs 24-30)
-fig-15.png  — Feature Atlas: Glass Brain View (ridge regression voxel importance)
-fig-16.png  — Feature Atlas: Top-Neuron Weight Map per variant
-fig-17.png  — Architecture-Sensitivity Map by layer
-fig-18.png  — Architecture-Sensitivity Map by training strategy (SI / IT / LoRA)
-fig-19.png  — Stability: Cross-Lingual LOO Pattern R per variant
-fig-20.png  — Stability: Bootstrap Confidence Intervals (1000 iterations)
-fig-21.png  — Attention variant scalability: LOO Pattern R vs model dimension
-fig-22.png  — Schaefer 100-ROI atlas structure (MNI152, orthographic)
-fig-23.png  — Feature-neural alignment map: mean |feature–ROI corr|
-fig-24.png  — Cross-language shared alignment: 2·min(EN,CN)/(EN+CN) per ROI
-fig-25.png  — Language selectivity map: EN-selective (red) vs CN-selective (blue)
-fig-26.png  — Top-20 ROIs by mean |feature–ROI corr| importance score
 
 ## Activation Functions (Figs 31–46)
-fig-27.png  — Architecture-sensitivity map: 5-panel sensitivity Δ bar chart
-fig-28.png  — Sensitivity heatmaps: mean Pearson r per (variant, layer)
-fig-29.png  — Stability overview: 3 panels (label breakdown, EN/ZH, strategy)
-fig-30.png  — Cross-language transfer matrices (diagonal = within-language)
-fig-31.png  — Training strategy comparison: SI+relu vs SI+gelu & others
-fig-32.png  — LoRA rank sensitivity: gelu/relu improve as rank decreases (r=8 best)
-fig-33.png  — Strategy × Activation mean Pearson r heatmap
 
 ## Positional Encodings (Figs 47–61)
-fig-34.png  — Schaefer 100-ROI atlas structure (MNI152, orthographic)
-fig-35.png  — Feature-neural alignment map: mean |feature–ROI corr|
-fig-36.png  — Cross-language shared alignment: 2·min(EN,CN)/(EN+CN) per ROI
-fig-37.png  — Language selectivity map: EN-selective (red) vs CN-selective (blue)
-fig-38.png  — Feature atlas for PE component: top brain ROIs under pretrained backbone
-fig-39.png  — Architecture-sensitivity map: mean Pearson r per PE variant
-fig-40.png  — PE variant × layer heatmap: mean Pearson r per (variant, layer)
-fig-41.png  — Stability overview: 440 total conditions classification breakdown
-fig-42.png  — Stability cross-language transfer for PE variants
-fig-43.png  — Cross-language transfer matrix: best per-language condition per PE variant
-fig-44.png  — Strategy comparison: LoRA r8 sinusoidal tiny (best: r=+0.005058)
-fig-45.png  — LoRA rank sensitivity: r=8 optimal for sinusoidal (only positive result)
